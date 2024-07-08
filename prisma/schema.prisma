@@ -13,6 +13,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+//criar uma migration yarn prisma migrate dev
 model User {
   id String @id @default(uuid())
   name String 
@@ -20,4 +21,33 @@ model User {
   password String 
   created_at DateTime? @default(now())
   updated_at DateTime? @default(now())
+
+  @@map("users")
+  list List[]
+}
+
+model List{
+  id String @id @default(uuid())
+  name String 
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+
+  user User @relation(fields: [user_id], references: [id]) 
+
+  @@map("lists")
+  user_id String
+}
+
+model Tasks{
+  id String @id @default(uuid())
+  name String
+  note String?
+  status Boolean @default(true)
+  position Int
+
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+
+  @@map("tasks")
+  
 }
