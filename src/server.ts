@@ -6,6 +6,8 @@ import { router } from "./routes";
 
 const app = express();
 app.use(express.json());
+
+//serve para habilitar qualquer url e qualquer ip conseguir fazer as req
 app.use(cors());
 
 app.use(router);
