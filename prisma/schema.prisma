@@ -36,6 +36,7 @@ model List{
 
   @@map("lists")
   user_id String
+  tasks Tasks[]
 }
 
 model Tasks{
@@ -48,6 +49,23 @@ model Tasks{
   created_at DateTime? @default(now())
   updated_at DateTime? @default(now())
 
+  list List @relation(fields: [list_id], references: [id])
+
   @@map("tasks")
-  
+  list_id String
+  sub_tasks SubTasks[] 
+}
+
+model SubTasks{
+  id String @id @default(uuid())
+  name String
+  status Boolean @default(true)
+  position Int
+
+  created_at DateTime? @default(now())
+  updated_at DateTime? @default(now())
+
+   tasks Tasks @relation(fields: [task_id], references: [id])
+  @@map("subtasks")
+  task_id String
 }
