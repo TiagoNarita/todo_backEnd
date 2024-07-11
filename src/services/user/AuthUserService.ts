@@ -1,3 +1,5 @@
+import { prismaClient } from "../../prisma";
+
 interface AuthRequest {
   email: string;
   password: string;
@@ -5,7 +7,18 @@ interface AuthRequest {
 
 class AuthUserService {
   async execute({ email, password }: AuthRequest) {
-    console.log(email);
+    //verify if email exist
+    const user = await prismaClient.user.findFirst({
+      where: {
+        email: email,
+      },
+    });
+
+    if (!user) {
+      throw new Error("User / password not found ");
+    }
+
+    //ver
 
     return { ok: true };
   }
