@@ -7,6 +7,7 @@ class DetailUserController {
 
     const user = await detailUserService.execute();
 
+    //eazy way
     return resp.json(user);
   }
 }
